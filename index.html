@@ -15,6 +15,8 @@
         rel="stylesheet">
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Swiper JS for Before/After Slider -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <style>
         * {
             margin: 0;
@@ -36,7 +38,7 @@
             --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.05);
             --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.08);
             --shadow-lg: 0 16px 32px rgba(0, 0, 0, 0.12);
-            --transition: all 0.3s ease;
+            --transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
         }
 
         body {
@@ -44,6 +46,7 @@
             background: var(--cream);
             color: var(--gray);
             scroll-behavior: smooth;
+            overflow-x: hidden;
         }
 
         h1,
@@ -65,6 +68,7 @@
             display: flex;
             gap: 6px;
             box-shadow: var(--shadow-sm);
+            backdrop-filter: blur(4px);
         }
 
         .lang-btn {
@@ -85,9 +89,10 @@
             color: var(--teal-dark);
         }
 
-        /* Header */
+        /* Header with glow effect */
         header {
-            background: var(--white);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
             box-shadow: var(--shadow-sm);
             position: sticky;
             top: 0;
@@ -97,6 +102,11 @@
             align-items: center;
             justify-content: space-between;
             flex-wrap: wrap;
+            transition: var(--transition);
+        }
+
+        header:hover {
+            box-shadow: 0 4px 20px rgba(26, 95, 95, 0.15);
         }
 
         .logo {
@@ -104,6 +114,7 @@
             font-weight: 600;
             color: var(--teal-dark);
             letter-spacing: -0.3px;
+            position: relative;
         }
 
         .logo span {
@@ -123,6 +134,22 @@
             font-weight: 500;
             transition: var(--transition);
             font-size: 0.9rem;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gold);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
         }
 
         nav a:hover {
@@ -138,17 +165,39 @@
             color: var(--teal-dark);
         }
 
-        /* Hero Section - Interactive Split Layout */
+        /* Hero with video background */
         .hero {
             min-height: 90vh;
+            position: relative;
             display: flex;
             align-items: center;
-            background: linear-gradient(135deg, var(--cream) 0%, var(--cream-dark) 100%);
-            position: relative;
             overflow: hidden;
         }
 
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+            filter: brightness(0.4);
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(13, 59, 59, 0.85), rgba(26, 95, 95, 0.7));
+            z-index: 1;
+        }
+
         .hero-container {
+            position: relative;
+            z-index: 2;
             max-width: 1200px;
             margin: 0 auto;
             padding: 3rem 2rem;
@@ -156,24 +205,25 @@
             grid-template-columns: 1fr 1fr;
             gap: 3rem;
             align-items: center;
+            color: var(--white);
         }
 
         .hero-content h1 {
             font-size: clamp(2.2rem, 5vw, 3.5rem);
-            color: var(--teal-dark);
+            color: var(--white);
             line-height: 1.2;
             margin-bottom: 1.2rem;
         }
 
         .hero-content h1 em {
-            color: var(--gold);
+            color: var(--gold-light);
             font-style: italic;
         }
 
         .hero-content p {
             font-size: 1rem;
             line-height: 1.6;
-            color: var(--gray-light);
+            color: rgba(255, 255, 255, 0.85);
             margin-bottom: 2rem;
         }
 
@@ -190,13 +240,13 @@
         .stat-number {
             font-size: 1.8rem;
             font-weight: 700;
-            color: var(--teal);
+            color: var(--gold-light);
             font-family: 'Playfair Display', serif;
         }
 
         .stat-label {
             font-size: 0.8rem;
-            color: var(--gray-light);
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .hero-image {
@@ -206,6 +256,7 @@
             box-shadow: var(--shadow-lg);
             transform: rotate(2deg);
             transition: var(--transition);
+            background: rgba(0, 0, 0, 0.2);
         }
 
         .hero-image:hover {
@@ -218,18 +269,7 @@
             display: block;
         }
 
-        .hero-image::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, rgba(26, 95, 95, 0.1), transparent);
-            pointer-events: none;
-        }
-
-        /* Buttons */
+        /* Buttons with glow */
         .btn-group {
             display: flex;
             gap: 1rem;
@@ -244,30 +284,35 @@
             transition: var(--transition);
             display: inline-block;
             font-size: 0.9rem;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
         }
 
         .btn-primary {
-            background: var(--teal);
-            color: var(--white);
+            background: var(--gold);
+            color: var(--teal-dark);
             border: none;
+            box-shadow: 0 4px 15px rgba(198, 164, 126, 0.3);
         }
 
         .btn-primary:hover {
-            background: var(--teal-dark);
+            background: var(--gold-light);
             transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
+            box-shadow: 0 8px 25px rgba(198, 164, 126, 0.5);
         }
 
         .btn-outline {
-            border: 2px solid var(--teal);
-            color: var(--teal);
+            border: 2px solid var(--gold);
+            color: var(--gold);
             background: transparent;
         }
 
         .btn-outline:hover {
-            background: var(--teal);
-            color: var(--white);
+            background: var(--gold);
+            color: var(--teal-dark);
             transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(198, 164, 126, 0.3);
         }
 
         /* Section Styles */
@@ -296,7 +341,7 @@
             font-size: 1rem;
         }
 
-        /* Services Grid - 3D Card Effect */
+        /* Services Grid with glow cards */
         .services-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -311,12 +356,30 @@
             transition: var(--transition);
             text-align: center;
             border: 1px solid rgba(198, 164, 126, 0.15);
+            position: relative;
         }
 
         .service-card:hover {
             transform: translateY(-8px);
-            box-shadow: var(--shadow-lg);
-            border-color: var(--gold-light);
+            box-shadow: 0 20px 35px rgba(26, 95, 95, 0.2);
+            border-color: var(--gold);
+        }
+
+        .service-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 20%, rgba(198, 164, 126, 0.05), transparent);
+            opacity: 0;
+            transition: opacity 0.4s;
+            pointer-events: none;
+        }
+
+        .service-card:hover::after {
+            opacity: 1;
         }
 
         .service-icon {
@@ -338,7 +401,47 @@
             line-height: 1.5;
         }
 
-        /* Gallery - Interactive Masonry */
+        /* Before/After Slider (Swiper) */
+        .beforeafter-container {
+            max-width: 800px;
+            margin: 0 auto;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .swiper-slide {
+            position: relative;
+            text-align: center;
+        }
+
+        .swiper-slide img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .slide-caption {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            padding: 8px;
+            font-size: 0.8rem;
+        }
+
+        .swiper-button-next,
+        .swiper-button-prev {
+            color: var(--gold);
+        }
+
+        .swiper-pagination-bullet-active {
+            background: var(--gold);
+        }
+
+        /* Gallery with glow */
         .gallery {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -355,7 +458,7 @@
 
         .gallery-item:hover {
             transform: scale(1.02);
-            box-shadow: var(--shadow-md);
+            box-shadow: 0 15px 30px rgba(26, 95, 95, 0.25);
         }
 
         .gallery-item img {
@@ -388,24 +491,7 @@
             transform: translateY(-5px);
             background: var(--white);
             box-shadow: var(--shadow-md);
-        }
-
-        .testimonial-text {
-            font-style: italic;
-            margin-bottom: 1rem;
-            line-height: 1.5;
-            color: var(--gray);
-        }
-
-        .testimonial-author {
-            font-weight: 600;
-            color: var(--teal-dark);
-        }
-
-        .testimonial-stars {
-            color: var(--gold);
-            margin-bottom: 0.8rem;
-            font-size: 0.8rem;
+            border-color: var(--gold);
         }
 
         /* Contact Section */
@@ -469,10 +555,9 @@
         textarea:focus {
             outline: none;
             border-color: var(--gold);
-            box-shadow: 0 0 0 3px rgba(198, 164, 126, 0.1);
+            box-shadow: 0 0 0 3px rgba(198, 164, 126, 0.2);
         }
 
-        /* Footer */
         footer {
             background: var(--teal-dark);
             color: var(--cream);
@@ -480,7 +565,7 @@
             padding: 2rem;
         }
 
-        /* WhatsApp Float */
+        /* WhatsApp Float with pulse animation */
         .whatsapp-float {
             position: fixed;
             bottom: 20px;
@@ -498,14 +583,30 @@
             z-index: 1000;
             transition: var(--transition);
             text-decoration: none;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+            }
+
+            70% {
+                box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+            }
         }
 
         .whatsapp-float:hover {
             transform: scale(1.1);
             background: #128C7E;
+            animation: none;
         }
 
-        /* Mobile */
+        /* Mobile Responsive */
         @media (max-width: 768px) {
             .hero-container {
                 grid-template-columns: 1fr;
@@ -552,9 +653,12 @@
             .gallery {
                 grid-template-columns: 1fr;
             }
+
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
-        /* Arabic styles */
         html[dir="rtl"] {
             direction: rtl;
             text-align: right;
@@ -568,11 +672,11 @@
             display: block;
         }
 
-        /* Smooth fade-in */
+        /* Scroll animations */
         .fade-up {
             opacity: 0;
             transform: translateY(30px);
-            transition: opacity 0.7s ease, transform 0.7s ease;
+            transition: opacity 0.7s cubic-bezier(0.2, 0.9, 0.4, 1.1), transform 0.7s cubic-bezier(0.2, 0.9, 0.4, 1.1);
         }
 
         .fade-up.visible {
@@ -603,14 +707,20 @@
             <nav id="nav">
                 <a href="#home-en">Home</a>
                 <a href="#services-en">Services</a>
+                <a href="#beforeafter-en">Transformations</a>
                 <a href="#gallery-en">Gallery</a>
                 <a href="#testimonials-en">Reviews</a>
                 <a href="#contact-en">Contact</a>
             </nav>
         </header>
 
-        <!-- Hero Section -->
+        <!-- Hero with video background -->
         <section id="home-en" class="hero">
+            <video class="hero-video" autoplay muted loop playsinline>
+                <source src="https://videos.pexels.com/video-files/3195394/3195394-uhd_2560_1440_25fps.mp4"
+                    type="video/mp4">
+            </video>
+            <div class="hero-overlay"></div>
             <div class="hero-container">
                 <div class="hero-content fade-up">
                     <h1>Where Science <em>Meets Beauty</em></h1>
@@ -642,7 +752,7 @@
             </div>
         </section>
 
-        <!-- Services Section -->
+        <!-- Services -->
         <div class="section" id="services-en">
             <h2 class="section-title fade-up">Our Treatments</h2>
             <p class="section-subtitle fade-up">Advanced aesthetic solutions tailored to your unique needs</p>
@@ -680,8 +790,36 @@
             </div>
         </div>
 
-        <!-- Gallery Section -->
-        <div class="section section-alt" id="gallery-en">
+        <!-- Before/After Slider -->
+        <div class="section section-alt" id="beforeafter-en">
+            <h2 class="section-title fade-up">Real Transformations</h2>
+            <p class="section-subtitle fade-up">See the results our clients love</p>
+            <div class="beforeafter-container swiper fade-up">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide"><img
+                            src="https://image2url.com/r2/default/images/1775573287731-0f671ea0-e43e-47c1-b338-48be14b3439a.png"
+                            alt="Before/After 1">
+                        <div class="slide-caption">Laser Hair Removal – Before & After</div>
+                    </div>
+                    <div class="swiper-slide"><img
+                            src="https://image2url.com/r2/default/images/1775573287731-0f671ea0-e43e-47c1-b338-48be14b3439a.png"
+                            alt="Before/After 2">
+                        <div class="slide-caption">Skin Rejuvenation – Before & After</div>
+                    </div>
+                    <div class="swiper-slide"><img
+                            src="https://image2url.com/r2/default/images/1775573287731-0f671ea0-e43e-47c1-b338-48be14b3439a.png"
+                            alt="Before/After 3">
+                        <div class="slide-caption">Botox & Fillers – Before & After</div>
+                    </div>
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+
+        <!-- Gallery -->
+        <div class="section" id="gallery-en">
             <h2 class="section-title fade-up">Our Gallery</h2>
             <p class="section-subtitle fade-up">Real results. Real transformations.</p>
             <div class="gallery">
@@ -706,8 +844,8 @@
             </div>
         </div>
 
-        <!-- Testimonials Section -->
-        <div class="section" id="testimonials-en">
+        <!-- Testimonials -->
+        <div class="section section-alt" id="testimonials-en">
             <h2 class="section-title fade-up">What Our Clients Say</h2>
             <p class="section-subtitle fade-up">Trusted by hundreds across Amman</p>
             <div class="testimonials-grid">
@@ -735,32 +873,22 @@
             </div>
         </div>
 
-        <!-- Contact Section -->
+        <!-- Contact -->
         <div class="section" id="contact-en">
             <div class="contact-grid fade-up">
                 <div class="contact-info">
                     <h3>Visit Us</h3>
                     <p>Experience luxury medical aesthetics in the heart of Amman.</p>
-                    <div class="contact-detail">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <span>XWCV+CW8, Amman, Jordan</span>
-                    </div>
-                    <div class="contact-detail">
-                        <i class="fas fa-phone-alt"></i>
-                        <span>+962 7 9XXX XXXX</span>
-                    </div>
-                    <div class="contact-detail">
-                        <i class="fas fa-clock"></i>
-                        <span>Mon–Thu, Sat–Sun: 9:00 AM – 5:00 PM<br>Friday: Closed</span>
-                    </div>
-                    <div class="contact-detail">
-                        <i class="fab fa-instagram"></i>
-                        <span>@hgbeautyclinic</span>
-                    </div>
+                    <div class="contact-detail"><i class="fas fa-map-marker-alt"></i><span>XWCV+CW8, Amman,
+                            Jordan</span></div>
+                    <div class="contact-detail"><i class="fas fa-phone-alt"></i><span>+962 7 9XXX XXXX</span></div>
+                    <div class="contact-detail"><i class="fas fa-clock"></i><span>Mon–Thu, Sat–Sun: 9:00 AM – 5:00
+                            PM<br>Friday: Closed</span></div>
+                    <div class="contact-detail"><i class="fab fa-instagram"></i><span>@hgbeautyclinic</span></div>
                 </div>
                 <div class="contact-form">
-                    <h3 style="margin-bottom: 1.5rem; color: var(--teal-dark);">Book a Consultation</h3>
-                    <form id="consultationForm" action="#" method="post">
+                    <h3 style="margin-bottom:1.5rem; color:var(--teal-dark);">Book a Consultation</h3>
+                    <form>
                         <div class="form-group"><input type="text" placeholder="Full Name" required></div>
                         <div class="form-group"><input type="email" placeholder="Email" required></div>
                         <div class="form-group"><input type="tel" placeholder="Phone Number" required></div>
@@ -776,8 +904,7 @@
                         <div class="form-group"><textarea rows="3" placeholder="Message (optional)"></textarea></div>
                         <button type="submit" class="btn btn-primary" style="width:100%;">Request Appointment</button>
                     </form>
-                    <p style="font-size: 0.7rem; text-align: center; margin-top: 1rem;">We'll respond within 24 hours
-                    </p>
+                    <p style="font-size:0.7rem; text-align:center; margin-top:1rem;">We'll respond within 24 hours</p>
                 </div>
             </div>
         </div>
@@ -787,7 +914,7 @@
         </footer>
     </div>
 
-    <!-- ARABIC VERSION -->
+    <!-- ARABIC VERSION (same structure, translated) -->
     <div id="lang-ar" class="lang-content">
         <header>
             <div class="logo">إتش جي <span>بيوتي كلينك</span></div>
@@ -795,13 +922,19 @@
             <nav id="navAr">
                 <a href="#home-ar">الرئيسية</a>
                 <a href="#services-ar">خدماتنا</a>
-                <a href="#gallery-ar">معرض الصور</a>
+                <a href="#beforeafter-ar">التحولات</a>
+                <a href="#gallery-ar">المعرض</a>
                 <a href="#testimonials-ar">آراء العملاء</a>
                 <a href="#contact-ar">اتصل بنا</a>
             </nav>
         </header>
 
         <section id="home-ar" class="hero">
+            <video class="hero-video" autoplay muted loop playsinline>
+                <source src="https://videos.pexels.com/video-files/3195394/3195394-uhd_2560_1440_25fps.mp4"
+                    type="video/mp4">
+            </video>
+            <div class="hero-overlay"></div>
             <div class="hero-container">
                 <div class="hero-content fade-up">
                     <h1>العلم <em>يجتمع مع الجمال</em></h1>
@@ -866,7 +999,31 @@
             </div>
         </div>
 
-        <div class="section section-alt" id="gallery-ar">
+        <div class="section section-alt" id="beforeafter-ar">
+            <h2 class="section-title fade-up">تحولات حقيقية</h2>
+            <p class="section-subtitle fade-up">شاهدي النتائج التي يحبها عملاؤنا</p>
+            <div class="beforeafter-container swiper fade-up">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide"><img
+                            src="https://image2url.com/r2/default/images/1775573287731-0f671ea0-e43e-47c1-b338-48be14b3439a.png">
+                        <div class="slide-caption">إزالة الشعر بالليزر – قبل وبعد</div>
+                    </div>
+                    <div class="swiper-slide"><img
+                            src="https://image2url.com/r2/default/images/1775573287731-0f671ea0-e43e-47c1-b338-48be14b3439a.png">
+                        <div class="slide-caption">تجديد البشرة – قبل وبعد</div>
+                    </div>
+                    <div class="swiper-slide"><img
+                            src="https://image2url.com/r2/default/images/1775573287731-0f671ea0-e43e-47c1-b338-48be14b3439a.png">
+                        <div class="slide-caption">بوتكس وفيلرز – قبل وبعد</div>
+                    </div>
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+
+        <div class="section" id="gallery-ar">
             <h2 class="section-title fade-up">معرض الصور</h2>
             <p class="section-subtitle fade-up">نتائج حقيقية. تحولات مذهلة.</p>
             <div class="gallery">
@@ -891,7 +1048,7 @@
             </div>
         </div>
 
-        <div class="section" id="testimonials-ar">
+        <div class="section section-alt" id="testimonials-ar">
             <h2 class="section-title fade-up">آراء عملائنا</h2>
             <p class="section-subtitle fade-up">يُثق بنا المئات في جميع أنحاء عمان</p>
             <div class="testimonials-grid">
@@ -959,7 +1116,16 @@
         </footer>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
+        // Initialize Swiper slider
+        const swiper = new Swiper('.swiper', {
+            loop: true,
+            navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+            pagination: { el: '.swiper-pagination', clickable: true },
+            autoplay: { delay: 4000 },
+        });
+
         // Language toggle
         const enDiv = document.getElementById('lang-en');
         const arDiv = document.getElementById('lang-ar');
@@ -978,6 +1144,8 @@
                 }
                 btns.forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
+                // Reinitialize Swiper after language change (DOM may shift)
+                setTimeout(() => swiper.update(), 100);
             });
         });
         // Mobile menu
@@ -987,7 +1155,7 @@
         const menuBtnAr = document.getElementById('menuBtnAr');
         const navAr = document.getElementById('navAr');
         if (menuBtnAr) menuBtnAr.onclick = () => navAr.classList.toggle('show');
-        // Fade-up scroll animation
+        // Scroll animation observer
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
         }, { threshold: 0.1 });

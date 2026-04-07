@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>H.G Beauty Clinic – Premium Beauty Services in Amman</title>
+    <meta name="description"
+        content="Luxury beauty clinic in Amman offering facials, hair services, nails, and makeup. Book your appointment online today!">
+    <meta name="keywords"
+        content="beauty clinic Amman, facial Jordan, hair salon, nail salon, makeup artist, beauty services">
+    <!-- Google Fonts & Font Awesome -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --pink-light: #FFF0F5;
+            /* Lavender blush */
+            --pink-soft: #F9C4D2;
+            /* Soft pink */
+            --pink-primary: #E8A2B0;
+            /* Main brand pink */
+            --pink-deep: #D4718A;
+            /* Deep pink for accents */
+            --gold: #D4AF37;
+            /* Elegant gold accent */
+            --brown-warm: #8B5E3C;
+            /* Warm brown for text */
+            --text-dark: #4A3728;
+            --text-light: #7A6A5A;
+            --white: #FFFFFF;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            --nav-h: 70px;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--pink-light);
+            color: var(--text-dark);
+            scroll-behavior: smooth;
+        }
+
+        h1,
+        h2,
+        h3,
+        .logo {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Language Switch */
+        .lang-switch {
+            position: fixed;
+            top: 18px;
+            right: 20px;
+            z-index: 1001;
+            background: var(--pink-primary);
+            padding: 6px 14px;
+            border-radius: 40px;
+            display: flex;
+            gap: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        .lang-btn {
+            background: none;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 4px 12px;
+            border-radius: 30px;
+            transition: 0.2s;
+            color: white;
+            font-size: 0.8rem;
+        }
+
+        .lang-btn.active {
+            background: white;
+            color: var(--pink-deep);
+        }
+
+        /* Header */
+        header {
+            background: white;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 0.8rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--pink-deep);
+        }
+
+        .logo span {
+            color: var(--gold);
+        }
+
+        nav {
+            display: flex;
+            gap: 1.2rem;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: 0.2s;
+        }
+
+        nav a:hover {
+            color: var(--pink-deep);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, #FFF0F5, #FCE4EC);
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            color: var(--brown-warm);
+        }
+
+        .hero h1 em {
+            color: var(--pink-deep);
+            font-style: italic;
+        }
+
+        .hero p {
+            max-width: 600px;
+            margin: 1rem auto;
+            color: var(--text-light);
+        }
+
+        .cta-group {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 12px 28px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.2s;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--pink-deep);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--pink-primary);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            border: 2px solid var(--pink-deep);
+            color: var(--pink-deep);
+        }
+
+        .btn-outline:hover {
+            background: var(--pink-deep);
+            color: white;
+        }
+
+        /* Sections */
+        .section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: var(--brown-warm);
+            position: relative;
+        }
+
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: var(--gold);
+            margin: 0.5rem auto;
+        }
+
+        .grid-3,
+        .grid-2,
+        .grid-4 {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .grid-3 {
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        }
+
+        .grid-2 {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+        .grid-4 {
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: 0.3s;
+            text-align: center;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            background: #f0e6e6;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        .price-card {
+            background: white;
+            border-radius: 20px;
+            padding: 1.8rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--pink-soft);
+        }
+
+        .price {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--pink-deep);
+        }
+
+        .price small {
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+
+        .service-list {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .service-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f0e6e6;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .contact-info {
+            background: var(--pink-soft);
+            padding: 2rem;
+            border-radius: 20px;
+        }
+
+        footer {
+            background: var(--brown-warm);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            header {
+                padding: 0.8rem 1rem;
+            }
+
+            nav {
+                display: none;
+                width: 100%;
+                flex-direction: column;
+                align-items: center;
+                background: white;
+                padding: 1rem;
+            }
+
+            nav.show {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .grid-3,
+            .grid-2,
+            .grid-4 {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-cta {
+                display: block;
+                margin: 0.5rem auto;
+            }
+        }
+
+        /* Arabic styles */
+        html[dir="rtl"] {
+            direction: rtl;
+            text-align: right;
+        }
+
+        .lang-content {
+            display: none;
+        }
+
+        .lang-content.active {
+            display: block;
+        }
+
+        .whatsapp-float {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: #25D366;
+            color: white;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            transition: 0.2s;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            background: #128C7E;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/962790000000?text=Hello%21%20I%27m%20interested%20in%20your%20beauty%20services"
+        class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <div class="lang-switch">
+        <button class="lang-btn active" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="ar">AR</button>
+    </div>
+
+    <!-- ENGLISH VERSION -->
+    <div id="lang-en" class="lang-content active">
+        <header>
+            <div class="logo">H.G <span>Beauty Clinic</span></div>
+            <button class="mobile-menu-btn" id="menuBtn"><i class="fas fa-bars"></i></button>
+            <nav id="nav">
+                <a href="#home-en">Home</a>
+                <a href="#services-en">Services</a>
+                <a href="#pricing-en">Pricing</a>
+                <a href="#gallery-en">Gallery</a>
+                <a href="#contact-en">Contact</a>
+            </nav>
+        </header>
+
+        <section id="home-en" class="hero">
+            <h1>Where Beauty <em>Meets Elegance</em></h1>
+            <p>Premium beauty clinic in Amman – Experience luxury treatments tailored just for you.</p>
+            <div class="cta-group">
+                <a href="#booking-en" class="btn btn-primary">Book Appointment</a>
+                <a href="#services-en" class="btn btn-outline">View Services</a>
+                <a href="#pricing-en" class="btn btn-outline">Pricing</a>
+            </div>
+        </section>
+
+        <div class="section" id="booking-en">
+            <h2 class="section-title">Book Your Appointment</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <img class="card-img"
+                        src="https://image2url.com/r2/default/images/1775573287731-0f671ea0-e43e-47c1-b338-48be14b3439a.png"
+                        alt="Booking">
+                    <div class="card-body">
+                        <h3>Online Booking</h3>
+                        <p>Reserve your spot – choose your service and preferred time.</p>
+                        <a href="#" class="btn btn-primary">Book Now</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <img class="card-img"
+                        src="https://image2url.com/r2/default/images/1775573287731-0f671ea0-e43e-47c1-b338-48be14b3439a.png"
+                        alt="Call">
+                    <div class="card-body">
+                        <h3>Call or WhatsApp</h3>
+                        <p>Prefer to speak with us? Call or message anytime.</p>
+                        <a href="tel:+962790000000" class="btn btn-outline">Call Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="services-en">
+            <h2 class="section-title">Our Services</h2>
+            <div class="grid-4">
+                <div class="card"><img class="card-img"
+                        src="https://image2url.com/r2/default/images/1775573287731-0f671ea0-e43e-47c1-b338-48be14b3439a.png">
+                    <div class="card-body">
+                        <h3>Facials</h3>
+                        <p>Customized skincare treatments for glowing skin.</p>
+                    </div>
+                </div>
+                <div class="card"><img class="card-img"
+                        src="https://image2url.com/r2/default/images/1775573287731-0f671ea0-e43e-47c1-b338-48be14b3439a.png">
+                    <div class="card-body">
+                        <h3>Hair Services</h3>
+                        <p>Cut, color, styling, and treatments.</p>
+                    </div>
+                </div>
+                <div class="card"><img class="card-img"
+                        src="https://image2url.com/r2/default/images/1775573287731-0f671ea0-e43e-47c1-b338-48be14b3439a.png">
+                    <div class="card-body">
+                        <h3>Nail Care</h3>
+                        <p>Manicure, pedicure, gel, and acrylic nails.</p>
+                    </div>
+                </div>
+                <div class="card"><img class="card-img"
+                        src="https://image2url.com/r2/default/images/1775573287731-0f671ea0-e43e-47c1-b338-48be14b3439a.png">
+                    <div class="card-body">
+                        <h3>Makeup</h3>
+                        <p>Professional makeup for all occasions.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="pricing-en">
+            <h2 class="section-title">Price List</h2>
+            <div class="grid-2">
+                <div class="price-card">
+                    <h3>Facials</h3>
+                    <ul class="service-list">
+                        <li>Classic Facial<span>25 JOD</span></li>
+                        <li>Hydrating Facial<span>35 JOD</span></li>
+                        <li>Anti-Aging<span>45 JOD</span></li>
+                    </ul>
+                </div>
+                <div class="price-card">
+                    <h3>Hair Services</h3>
+                    <ul class="service-list">
+                        <li>Haircut<span>15-25 JOD</span></li>
+                        <li>Color/Highlights<span>35-60 JOD</span></li>
+                        <li>Blowout<span>10 JOD</span></li>
+                    </ul>
+                </div>
+                <div class="price-card">
+                    <h3>Nails</h3>
+                    <ul class="service-list">
+                        <li>Manicure<span>12 JOD</span></li>
+                        <li>Pedicure<span>15 JOD</span></li>
+                        <li>Gel Extensions<span>25 JOD</span></li>
+                    </ul>
+                </div>
+                <div class="price-card">
+                    <h3>Makeup</h3>
+                    <ul class="service-list">
+                        <li>Day Makeup<span>20 JOD</span></li>
+                        <li>Evening Makeup<span>30 JOD</span></li>
+                        <li>Bridal Package<span>80 JOD</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="gallery-en">
+            <h2 class="section-title">Our Work</h2>
+            <div class="grid-3">
+                <img src="https://image2url.com/r2/default/images/1775573287731-0f671ea0-e43e-47c1-b338-48be14b3439a.png"
+                    style="width:100%; border-radius:16px;" alt="Gallery">
+                <img src="https://image2url.com/r2/default/images/1775573287731-0f671ea0-e43e-47c1-b338-48be14b3439a.png"
+                    style="width:100%; border-radius:16px;" alt="Gallery">
+                <img src="https://image2url.com/r2/default/images/1775573287731-0f671ea0-e43e-47c1-b338-48be14b3439a.png"
+                    style="width:100%; border-radius:16px;" alt="Gallery">
+            </div>
+        </div>
+
+        <div class="section" id="contact-en">
+            <h2 class="section-title">Visit Us</h2>
+            <div class="grid-2">
+                <div class="contact-info"><i class="fas fa-map-marker-alt"></i>
+                    <p>Amman, Jordan</p><i class="fas fa-phone"></i>
+                    <p>07 9XXX XXXX</p><i class="fas fa-clock"></i>
+                    <p>Sat-Thu 10AM-8PM, Fri closed</p><a href="https://wa.me/962790000000"
+                        class="btn btn-primary">WhatsApp Us</a>
+                </div>
+                <div class="map-container"><iframe
+                        src="https://maps.google.com/maps?q=Amman%2C%20Jordan&t=&z=12&ie=UTF8&iwloc=&output=embed"
+                        width="100%" height="250" style="border:0; border-radius:20px;"></iframe></div>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2025 H.G Beauty Clinic – Luxury beauty in Amman | Designed by Qimam Digital</p>
+        </footer>
+    </div>
+
+    <!-- ARABIC VERSION -->
+    <div id="lang-ar" class="lang-content">
+        <header>
+            <div class="logo">H.G <span>بيوتي كلينك</span></div>
+            <button class="mobile-menu-btn" id="menuBtnAr"><i class="fas fa-bars"></i></button>
+            <nav id="navAr">
+                <a href="#home-ar">الرئيسية</a>
+                <a href="#services-ar">خدماتنا</a>
+                <a href="#pricing-ar">أسعارنا</a>
+                <a href="#gallery-ar">معرض الصور</a>
+                <a href="#contact-ar">اتصل بنا</a>
+            </nav>
+        </header>
+
+        <section id="home-ar" class="hero">
+            <h1>الجمال <em>والأناقة</em></h1>
+            <p>عيادة تجميل فاخرة في عمان – تجارب علاجية فاخرة مصممة خصيصًا لك</p>
+            <div class="cta-group"><a href="#booking-ar" class="btn btn-primary">احجزي موعدك</a><a href="#services-ar"
+                    class="btn btn-outline">خدماتنا</a><a href="#pricing-ar" class="btn btn-outline">أسعارنا</a></div>
+        </section>
+
+        <div class="section" id="booking-ar">
+            <h2 class="section-title">احجزي موعدك</h2>
+            <div class="grid-2">
+                <div class="card"><img class="card-img"
+                        src="https://image2url.com/r2/default/images/1775573287731-0f671ea0-e43e-47c1-b338-48be14b3439a.png">
+                    <div class="card-body">
+                        <h3>حجز أونلاين</h3>
+                        <p>احجزي الخدمة والوقت المناسب لك</p><a href="#" class="btn btn-primary">احجزي الآن</a>
+                    </div>
+                </div>
+                <div class="card"><img class="card-img"
+                        src="https://image2url.com/r2/default/images/1775573287731-0f671ea0-e43e-47c1-b338-48be14b3439a.png">
+                    <div class="card-body">
+                        <h3>اتصلي أو واتساب</h3><a href="tel:+962790000000" class="btn btn-outline">اتصلي الآن</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="services-ar">
+            <h2 class="section-title">خدماتنا</h2>
+            <div class="grid-4">
+                <div class="card"><img class="card-img"
+                        src="https://image2url.com/r2/default/images/1775573287731-0f671ea0-e43e-47c1-b338-48be14b3439a.png">
+                    <div class="card-body">
+                        <h3>العناية بالبشرة</h3>
+                        <p>علاجات مخصصة لبشرة مشرقة</p>
+                    </div>
+                </div>
+                <div class="card"><img class="card-img"
+                        src="https://image2url.com/r2/default/images/1775573287731-0f671ea0-e43e-47c1-b338-48be14b3439a.png">
+                    <div class="card-body">
+                        <h3>خدمات الشعر</h3>
+                        <p>قص، صبغ، تسريحات</p>
+                    </div>
+                </div>
+                <div class="card"><img class="card-img"
+                        src="https://image2url.com/r2/default/images/1775573287731-0f671ea0-e43e-47c1-b338-48be14b3439a.png">
+                    <div class="card-body">
+                        <h3>العناية بالأظافر</h3>
+                        <p>مانيكير، باديكير، جيل</p>
+                    </div>
+                </div>
+                <div class="card"><img class="card-img"
+                        src="https://image2url.com/r2/default/images/1775573287731-0f671ea0-e43e-47c1-b338-48be14b3439a.png">
+                    <div class="card-body">
+                        <h3>المكياج</h3>
+                        <p>مكياج احترافي لجميع المناسبات</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="pricing-ar">
+            <h2 class="section-title">قائمة الأسعار</h2>
+            <div class="grid-2">
+                <div class="price-card">
+                    <h3>العناية بالبشرة</h3>
+                    <ul class="service-list">
+                        <li>كلاسيك<span>25 دينار</span></li>
+                        <li>ترطيب عميق<span>35 دينار</span></li>
+                        <li>مضاد للشيخوخة<span>45 دينار</span></li>
+                    </ul>
+                </div>
+                <div class="price-card">
+                    <h3>خدمات الشعر</h3>
+                    <ul class="service-list">
+                        <li>قص شعر<span>15-25 دينار</span></li>
+                        <li>صبغ/هايلايت<span>35-60 دينار</span></li>
+                        <li>سشوار<span>10 دينار</span></li>
+                    </ul>
+                </div>
+                <div class="price-card">
+                    <h3>الأظافر</h3>
+                    <ul class="service-list">
+                        <li>مانيكير<span>12 دينار</span></li>
+                        <li>باديكير<span>15 دينار</span></li>
+                        <li>جيل<span>25 دينار</span></li>
+                    </ul>
+                </div>
+                <div class="price-card">
+                    <h3>المكياج</h3>
+                    <ul class="service-list">
+                        <li>مكياج نهاري<span>20 دينار</span></li>
+                        <li>مكياج سهرة<span>30 دينار</span></li>
+                        <li>باقة عروس<span>80 دينار</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="gallery-ar">
+            <h2 class="section-title">معرض الصور</h2>
+            <div class="grid-3"><img
+                    src="https://image2url.com/r2/default/images/1775573287731-0f671ea0-e43e-47c1-b338-48be14b3439a.png"
+                    style="width:100%; border-radius:16px;"><img
+                    src="https://image2url.com/r2/default/images/1775573287731-0f671ea0-e43e-47c1-b338-48be14b3439a.png"
+                    style="width:100%; border-radius:16px;"><img
+                    src="https://image2url.com/r2/default/images/1775573287731-0f671ea0-e43e-47c1-b338-48be14b3439a.png"
+                    style="width:100%; border-radius:16px;"></div>
+        </div>
+
+        <div class="section" id="contact-ar">
+            <h2 class="section-title">موقعنا</h2>
+            <div class="grid-2">
+                <div class="contact-info"><i class="fas fa-map-marker-alt"></i>
+                    <p>عمان، الأردن</p><i class="fas fa-phone"></i>
+                    <p>07 9XXX XXXX</p><i class="fas fa-clock"></i>
+                    <p>السبت-الخميس 10ص-8م، الجمعة مغلق</p><a href="https://wa.me/962790000000"
+                        class="btn btn-primary">واتساب</a>
+                </div>
+                <div class="map-container"><iframe
+                        src="https://maps.google.com/maps?q=Amman%2C%20Jordan&t=&z=12&ie=UTF8&iwloc=&output=embed"
+                        width="100%" height="250" style="border:0; border-radius:20px;"></iframe></div>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2025 H.G بيوتي كلينك – الجمال الفاخر في عمان | تصميم Qimam Digital</p>
+        </footer>
+    </div>
+
+    <script>
+        // Language toggle
+        const enDiv = document.getElementById('lang-en');
+        const arDiv = document.getElementById('lang-ar');
+        const btns = document.querySelectorAll('.lang-btn');
+        btns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const lang = btn.getAttribute('data-lang');
+                if (lang === 'en') {
+                    enDiv.classList.add('active');
+                    arDiv.classList.remove('active');
+                    document.documentElement.setAttribute('dir', 'ltr');
+                } else {
+                    arDiv.classList.add('active');
+                    enDiv.classList.remove('active');
+                    document.documentElement.setAttribute('dir', 'rtl');
+                }
+                btns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            });
+        });
+        // Mobile menu toggle for both languages
+        const menuBtn = document.getElementById('menuBtn');
+        const nav = document.getElementById('nav');
+        if (menuBtn) menuBtn.onclick = () => nav.classList.toggle('show');
+        const menuBtnAr = document.getElementById('menuBtnAr');
+        const navAr = document.getElementById('navAr');
+        if (menuBtnAr) menuBtnAr.onclick = () => navAr.classList.toggle('show');
+    </script>
+</body>
+
+</html>
